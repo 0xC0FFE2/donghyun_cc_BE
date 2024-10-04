@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Article } from '../domain/Article.entity';
 import { CreateArticleRequest } from '../presention/dto/request/CreateArticleRequest';
-import { ArticleResponse } from '../presention/dto/response/ArticleResponse';
 import { InternalServerException } from '../exception/InternalServerExpection';
 import { ArticleRepository } from '../domain/repository/ArticleRepository';
 
