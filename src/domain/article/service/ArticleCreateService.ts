@@ -14,7 +14,7 @@ export class ArticleCreateService {
 
     async createArticle(createArticleDto: CreateArticleRequest): Promise<Article> {
         try {
-            const Article = this.articleRepository.create({
+            const Article = await this.articleRepository.create({
                 ...createArticleDto,
             });
             await this.articleRepository.save(Article);
