@@ -14,11 +14,9 @@ export class ArticleCreateService {
 
     async createArticle(createArticleDto: CreateArticleRequest): Promise<Article> {
         try {
-            const Article = await this.articleRepository.create({
-                ...createArticleDto,
-            });
-            await this.articleRepository.save(Article);
-            return Article;
+            const article = await this.articleRepository.create(createArticleDto);
+            await this.articleRepository.save(article);
+            return article;
         } catch (error) {
             throw new InternalServerException;
         }
