@@ -1,24 +1,27 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Article } from '../domain/Article.entity';
-import { CreateArticleRequest } from '../presention/dto/request/CreateArticleRequest';
 import { InternalServerException } from '../exception/InternalServerExpection';
 import { ArticleRepository } from '../domain/repository/ArticleRepository';
+import { ArticleNotFoundException } from '../exception/ArticleNotFoundExpection';
 
 @Injectable()
-export class ArticleCreateService {
+export class ArticleDeleteService {
     constructor(
         @InjectRepository(ArticleRepository)
         private readonly articleRepository: ArticleRepository,
     ) { }
 
-    async createArticle(ArticleId: string): Promise<boolean> {
+    async deleteArticle(ArticleId: string): Promise<boolean> {
         try {
-            const Article = await this.articleRepository.findOne({ where: { article_id: ArticleId } })
-            await this.articleRepository.save(Article);
+            const execute = await this.articleRepository.delete({ article_id: ArticleId });
+
+            if (execute.affected === 0) {
+                throw new ArticleNotFoundException();
+            }
+
             return true;
         } catch (error) {
-            throw new InternalServerException;
+            throw new InternalServerException();
         }
     }
 }
