@@ -13,10 +13,14 @@ export class ArticleCreateService {
     ) { }
 
     async createArticle(createArticleDto: CreateArticleRequest): Promise<Article> {
-        const Article = this.articleRepository.create({
-            ...createArticleDto,
-        });
-        await this.articleRepository.save(Article);
-        return Article;
+        try {
+            const Article = this.articleRepository.create({
+                ...createArticleDto,
+            });
+            await this.articleRepository.save(Article);
+            return Article;
+        } catch (error) {
+            throw new InternalServerException;
+        }
     }
 }
