@@ -9,7 +9,7 @@ export class Category {
   @Column()
   category_name: string;
 
-  @ManyToMany(() => Article, (article) => article.article_id)
+  @ManyToMany(() => Article, (article) => article.categorys)
   @JoinTable()
   articles: Article[];
 }

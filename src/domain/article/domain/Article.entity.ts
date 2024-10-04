@@ -26,6 +26,6 @@ export class Article {
   })
   article_view_mode: Viewmode;
 
-  @ManyToMany(() => Category, (category) => category.category_id)
+  @ManyToMany(() => Category, (category) => category.articles)
   categorys: Category[];
 }
