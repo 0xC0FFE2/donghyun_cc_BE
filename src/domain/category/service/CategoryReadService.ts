@@ -1,10 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CategoryRepository } from '../domain/repository/CategoryRepository';
 import { CreateCategoryRequest } from '../presentation/dto/request/CreateCategoryRequest';
 import { Category } from '../domain/Category.entity';
 import { InternalServerException } from '../exception/InternalServerErrorException';
-import { CategoryNotFoundException } from '../exception/CategoryNotFoundException';
 
 @Injectable()
 export class CategoryReadService {
@@ -25,11 +24,11 @@ export class CategoryReadService {
         try {
             const category = await this.categoryRepository.findOne({ where: { category_id: id } });
             if (!category) {
-                throw new CategoryNotFoundException();
+                throw new NotFoundException('Category not found');
             }
             return category;
         } catch (error) {
-            if (error instanceof CategoryNotFoundException) throw error;
+            if (error instanceof NotFoundException) throw error;
             throw new InternalServerException();
         }
     }

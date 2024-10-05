@@ -1,9 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CategoryRepository } from '../domain/repository/CategoryRepository';
 import { Category } from '../domain/Category.entity';
 import { InternalServerException } from '../exception/InternalServerErrorException';
-import { CategoryNotFoundException } from '../exception/CategoryNotFoundException';
 import { CreateCategoryRequest } from '../presentation/dto/request/CreateCategoryRequest';
 import { UpdateCategoryRequest } from '../presentation/dto/request/UpdateCategoryRequest';
 
@@ -21,13 +20,13 @@ export class CategoryUpdateService {
             });
             
             if (!category) {
-                throw new CategoryNotFoundException();
+                throw new NotFoundException('Category not found');
             }
 
             category.category_name = updateCategoryDto.category_name;
             return await this.categoryRepository.save(category);
         } catch (error) {
-            if (error instanceof CategoryNotFoundException) throw error;
+            if (error instanceof NotFoundException) throw error;
             throw new InternalServerException();
         }
     }
