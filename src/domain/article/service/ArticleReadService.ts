@@ -19,7 +19,7 @@ export class ArticleReadService {
             }
             return article;
         } catch (error) {
-            throw new InternalServerException;
+            throw new InternalServerException();
         }
     }
 
