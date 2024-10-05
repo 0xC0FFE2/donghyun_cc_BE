@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Article } from '../domain/Article.entity';
 import { CreateArticleRequest } from '../presentation/dto/request/CreateArticleRequest';
-import { InternalServerException } from '../exception/InternalServerExpection';
+import { InternalServerException } from '../exception/InternalServerException';
 import { ArticleRepository } from '../domain/repository/ArticleRepository';
 @Injectable()
 export class ArticleReadService {

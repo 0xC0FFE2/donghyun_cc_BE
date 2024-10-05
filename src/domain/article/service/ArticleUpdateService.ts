@@ -2,7 +2,7 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { InjectRepository } from '@nestjs/typeorm';
 import { Article } from '../domain/Article.entity';
 import { UpdateArticleRequest } from '../presentation/dto/request/UpdateArticleRequest'; // 'presentation'의 철자 수정
-import { InternalServerException } from '../exception/InternalServerExpection';
+import { InternalServerException } from '../exception/InternalServerException';
 import { ArticleRepository } from '../domain/repository/ArticleRepository';
 import { CategoryRepository } from '../../category/domain/repository/CategoryRepository';
 import { In } from 'typeorm';
