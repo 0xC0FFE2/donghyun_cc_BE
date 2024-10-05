@@ -1,11 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Article } from '../domain/Article.entity';
 import { CreateArticleRequest } from '../presentation/dto/request/CreateArticleRequest';
 import { InternalServerException } from '../exception/InternalServerExpection';
 import { ArticleRepository } from '../domain/repository/ArticleRepository';
-import { ArticleNotFoundException } from '../exception/ArticleNotFoundExpection';
-
 @Injectable()
 export class ArticleReadService {
     constructor(
@@ -17,7 +15,7 @@ export class ArticleReadService {
         try {
             const article = await this.articleRepository.findOne({ where: { article_id: articleId } })
             if (!article) {
-                throw new ArticleNotFoundException();
+                throw new NotFoundException('Article Not Found');
             }
             return article;
         } catch (error) {
