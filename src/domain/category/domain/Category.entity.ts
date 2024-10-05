@@ -4,7 +4,7 @@ import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable } from 't
 @Entity('category')
 export class Category {
   @PrimaryGeneratedColumn('uuid')
-  category_id: string[];
+  category_id: string;
 
   @Column()
   category_name: string;

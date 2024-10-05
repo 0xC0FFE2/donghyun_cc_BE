@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Article } from '../domain/Article.entity';
-import { CreateArticleRequest } from '../presention/dto/request/CreateArticleRequest';
+import { CreateArticleRequest } from '../presentation/dto/request/CreateArticleRequest';
 import { InternalServerException } from '../exception/InternalServerExpection';
 import { ArticleRepository } from '../domain/repository/ArticleRepository';
 import { ArticleNotFoundException } from '../exception/ArticleNotFoundExpection';

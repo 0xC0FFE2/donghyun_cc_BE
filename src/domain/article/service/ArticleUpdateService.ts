@@ -6,6 +6,8 @@ import { InternalServerException } from '../exception/InternalServerExpection';
 import { ArticleNotFoundException } from '../exception/ArticleNotFoundExpection';
 import { ArticleRepository } from '../domain/repository/ArticleRepository';
 import { CategoryRepository } from '../../category/domain/repository/CategoryRepository';
+import { In } from 'typeorm';
+import { Category } from 'src/domain/category/domain/Category.entity';
 
 @Injectable()
 export class ArticleUpdateService {
@@ -14,8 +16,7 @@ export class ArticleUpdateService {
         private readonly articleRepository: ArticleRepository,
         @InjectRepository(CategoryRepository)
         private readonly categoryRepository: CategoryRepository,
-    ) {}
-
+    ) { }
     async updateArticle(articleId: string, updateArticleDto: UpdateArticleRequest): Promise<Article> {
         try {
             const article = await this.articleRepository.findOne({ where: { article_id: articleId } });
@@ -24,24 +25,37 @@ export class ArticleUpdateService {
                 throw new ArticleNotFoundException();
             }
 
-            // 업데이트할 필드를 설정
+            // 업데이트할 필드 설정
             article.article_name = updateArticleDto.article_name ?? article.article_name;
             article.thumbnail_url = updateArticleDto.thumbnail_url ?? article.thumbnail_url;
             article.article_data_url = updateArticleDto.article_data_url ?? article.article_data_url;
             article.article_view_mode = updateArticleDto.article_view_mode ?? article.article_view_mode;
 
-            // 카테고리 업데이트
-            if (updateArticleDto.category_ids) {
-                const categories = await this.categoryRepository.findByIds(updateArticleDto.category_ids);
-                if (categories.length > 0) {
-                    article.categorys = categories;  // 카테고리 업데이트
+            if (updateArticleDto.categories) {
+                const existingCategories = await this.categoryRepository.find({
+                    where: { category_id: In(updateArticleDto.categories) },
+                });
+
+                const existingCategoryIds = existingCategories.map(category => category.category_id);
+                const newCategoryNames = updateArticleDto.categories.filter(categoryId => !existingCategoryIds.includes(categoryId));
+
+                const newCategories: Category[] = [];
+                for (const categoryName of newCategoryNames) {
+                    const newCategory = this.categoryRepository.create({ category_name: categoryName });
+                    newCategories.push(newCategory);
                 }
+
+                if (newCategories.length > 0) {
+                    await this.categoryRepository.save(newCategories);
+                }
+
+                article.categorys = [...existingCategories, ...newCategories];
             }
 
-            await this.articleRepository.save(article);
-            return article;
+            return await this.articleRepository.save(article);
         } catch (error) {
-            throw new InternalServerException(); // 에러 처리를 좀 더 상세하게 할 수도 있음
+            throw new InternalServerException();
         }
     }
+
 }
