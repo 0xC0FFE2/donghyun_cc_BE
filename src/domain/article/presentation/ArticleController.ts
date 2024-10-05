@@ -6,6 +6,7 @@ import { ArticleDeleteService } from '../service/ArticleDeleteService';
 import { CreateArticleRequest } from '../presentation/dto/request/CreateArticleRequest';
 import { UpdateArticleRequest } from '../presentation/dto/request/UpdateArticleRequest';
 import { Article } from '../domain/Article.entity';
+import { Admin } from 'src/global/auth/decorators/AdminDecorator';
 
 @Controller('articles')
 export class ArticleController {
@@ -15,12 +16,6 @@ export class ArticleController {
         private readonly articleUpdateService: ArticleUpdateService,
         private readonly articleDeleteService: ArticleDeleteService,
     ) { }
-
-    @Post()
-    async createArticle(@Body() createArticleDto: CreateArticleRequest): Promise<Article> {
-        return this.articleCreateService.createArticle(createArticleDto);
-    }
-
     @Get(':id')
     async getArticleById(@Param('id') articleId: string): Promise<Article> {
         return this.articleReadService.readArticle(articleId);
@@ -33,7 +28,14 @@ export class ArticleController {
         return this.articleReadService.getArticle(page);
     }
 
+    @Post()
+    @Admin()
+    async createArticle(@Body() createArticleDto: CreateArticleRequest): Promise<Article> {
+        return this.articleCreateService.createArticle(createArticleDto);
+    }
+
     @Put(':id')
+    @Admin()
     async updateArticle(
         @Param('id') articleId: string,
         @Body() updateArticleDto: UpdateArticleRequest
@@ -42,6 +44,7 @@ export class ArticleController {
     }
 
     @Delete(':id')
+    @Admin()
     async deleteArticle(@Param('id') articleId: string): Promise<boolean> {
         return this.articleDeleteService.deleteArticle(articleId);
     }
