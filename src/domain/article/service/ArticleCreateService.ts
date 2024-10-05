@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Article } from '../domain/Article.entity';
 import { CreateArticleRequest } from '../presentation/dto/request/CreateArticleRequest';
@@ -19,33 +19,28 @@ export class ArticleCreateService {
 
     async createArticle(createArticleDto: CreateArticleRequest): Promise<Article> {
         try {
-            const article = await this.articleRepository.create(createArticleDto);
-            await this.articleRepository.save(article);
+            const article = this.articleRepository.create(createArticleDto);
 
-            if (createArticleDto.categories) {
-                const existingCategories = await this.categoryRepository.find({
-                    where: { category_id: In(createArticleDto.categories) },
+            if (createArticleDto.categories && createArticleDto.categories.length > 0) {
+                const categories = await this.categoryRepository.find({
+                    where: { category_id: In(createArticleDto.categories) }
                 });
 
-                const existingCategoryIds = existingCategories.map(category => category.category_id);
-                const newCategoryNames = createArticleDto.categories.filter(categoryId => !existingCategoryIds.includes(categoryId));
-
-                const newCategories: Category[] = [];
-                for (const categoryName of newCategoryNames) {
-                    const newCategory = this.categoryRepository.create({ category_name: categoryName });
-                    newCategories.push(newCategory);
+                if (categories.length !== createArticleDto.categories.length) {
+                    const foundCategoryIds = categories.map(cat => cat.category_id);
+                    const notFoundIds = createArticleDto.categories.filter(id => !foundCategoryIds.includes(id));
+                    throw new BadRequestException(`Categories not found: ${notFoundIds.join(', ')}`);
                 }
 
-                if (newCategories.length > 0) {
-                    await this.categoryRepository.save(newCategories);
-                }
-
-                article.categorys = [...existingCategories, ...newCategories];
+                article.categorys = categories;
             }
 
-            return article;
+            return await this.articleRepository.save(article);
         } catch (error) {
-            throw new InternalServerException;
+            if (error instanceof BadRequestException) {
+                throw error;
+            }
+            throw new InternalServerException();
         }
     }
 }
