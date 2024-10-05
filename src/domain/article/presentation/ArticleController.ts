@@ -16,16 +16,17 @@ export class ArticleController {
         private readonly articleUpdateService: ArticleUpdateService,
         private readonly articleDeleteService: ArticleDeleteService,
     ) { }
+
     @Get(':id')
     async getArticleById(@Param('id') articleId: string): Promise<Article> {
-        return this.articleReadService.readArticle(articleId);
+        return this.articleReadService.readArticle(articleId, false);
     }
 
     @Get()
     async getArticles(
         @Query('page') page: number = 1
     ): Promise<{ articles: Article[], totalPage: number }> {
-        return this.articleReadService.getArticle(page);
+        return this.articleReadService.getArticles(page, false);
     }
 
     @Post()
