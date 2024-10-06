@@ -26,6 +26,7 @@ export class ArticleUpdateService {
                 throw new NotFoundException(`Article with ID ${articleId} not found`);
             }
 
+            // Update 가능하게 할것 정의
             if (updateArticleDto.article_name) article.article_name = updateArticleDto.article_name;
             if (updateArticleDto.thumbnail_url) article.thumbnail_url = updateArticleDto.thumbnail_url;
             if (updateArticleDto.article_data_url) article.article_data_url = updateArticleDto.article_data_url;
