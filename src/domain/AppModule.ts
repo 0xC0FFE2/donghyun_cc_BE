@@ -7,8 +7,9 @@ import { CategoryModule } from './category/CategoryModule';
     imports: [
         TypeOrmModule.forRoot({
             type: 'sqlite',
-            database: 'database',
-            entities: [__dirname + '/**/*.entity{.ts,.js}']
+            database: 'database.sqlite',
+            entities: [__dirname + '/**/*.entity{.ts,.js}'],
+            synchronize: true,
         })
         , ArticleModule
         , CategoryModule],
