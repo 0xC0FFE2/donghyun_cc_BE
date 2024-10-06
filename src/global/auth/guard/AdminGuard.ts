@@ -4,7 +4,7 @@ import { AuthStrategy } from '../strategies/AuthStrategy';
 
 @Injectable()
 export class AdminGuard implements CanActivate {
-  constructor(private readonly authStrategy: AuthStrategy) {}
+  constructor(private readonly authStrategy: AuthStrategy) { }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request: Request = context.switchToHttp().getRequest();

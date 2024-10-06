@@ -7,15 +7,13 @@ import { ArticleDeleteService } from '../service/ArticleDeleteService';
 import { CreateArticleRequest } from './dto/request/CreateArticleRequest';
 import { UpdateArticleRequest } from './dto/request/UpdateArticleRequest';
 import { ArticleResponse } from './dto/response/ArticleResponse';
-import { Admin } from 'src/global/auth/decorators/AdminDecorator';
 import { Viewmode } from '../domain/enum/Viewmode';
 import { AdminGuard } from 'src/global/auth/guard/AdminGuard';
 
-@ApiTags('articles')
+@ApiTags('admin')
 @Controller('admin/articles')
 @UseGuards(AdminGuard)
-@Admin()
-export class ArticleController {
+export class AdminArticleController {
     constructor(
         private readonly articleCreateService: ArticleCreateService,
         private readonly articleReadService: ArticleReadService,
