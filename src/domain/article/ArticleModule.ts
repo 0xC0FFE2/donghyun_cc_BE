@@ -9,13 +9,25 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Article } from './domain/Article.entity';
 import { Category } from '../category/domain/Category.entity';
 import { AuthModule } from 'src/global/auth/AuthModule';
+import { ArticleSearchController } from './presentation/ArticleSearchController';
+import { ArticleSearchService } from './service/ArticleSearchService';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Article, Category]),
     AuthModule,
   ],
-  controllers: [ArticleController,AdminArticleController],
-  providers: [ArticleCreateService, ArticleReadService, ArticleUpdateService, ArticleDeleteService],
+  controllers: [
+    ArticleController,
+    AdminArticleController,
+    ArticleSearchController
+  ],
+  providers: [
+    ArticleCreateService,
+    ArticleReadService, 
+    ArticleUpdateService, 
+    ArticleDeleteService,
+    ArticleSearchService
+  ],
 })
 export class ArticleModule { }
