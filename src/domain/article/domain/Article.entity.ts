@@ -7,8 +7,8 @@ export class Article {
   @PrimaryGeneratedColumn('uuid')
   article_id: string;
 
-  @CreateDateColumn({ type: 'timestamp' })
-  article_date;
+  @CreateDateColumn({ type: 'datetime' })
+  article_date: Date;
 
   @Column() // 게시글 제목
   article_name: string;
