@@ -10,4 +10,4 @@ import { ArticleController } from './presentation/ArticleController';
   controllers: [ArticleController],
   providers: [ArticleCreateService,ArticleReadService,ArticleUpdateService,ArticleDeleteService],
 })
-export class AppModule {}
+export class ArticleModule {}
