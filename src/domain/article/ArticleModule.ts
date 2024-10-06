@@ -12,10 +12,10 @@ import { CategoryRepository } from '../category/domain/repository/CategoryReposi
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Article,ArticleRepository]),
-    TypeOrmModule.forFeature([Category,CategoryRepository]),
+    TypeOrmModule.forFeature([Article, ArticleRepository]),
+    TypeOrmModule.forFeature([Category, CategoryRepository]),
   ],
   controllers: [ArticleController],
-  providers: [ArticleCreateService,ArticleReadService,ArticleUpdateService,ArticleDeleteService],
+  providers: [ArticleCreateService, ArticleReadService, ArticleUpdateService, ArticleDeleteService],
 })
-export class ArticleModule {}
+export class ArticleModule { }

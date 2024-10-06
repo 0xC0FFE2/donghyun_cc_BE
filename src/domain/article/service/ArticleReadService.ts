@@ -39,7 +39,11 @@ export class ArticleReadService {
                 take: pageSize,
                 order: { article_date: 'DESC' }
             });
-            if (!articles) throw new NotFoundException('No article found!');
+
+            if (articles.length === 0) {
+                throw new NotFoundException('No article found!');
+            }
+
             const totalPage = Math.ceil(totalCount / pageSize);
             return { articles, totalPage };
         } catch (error) {
