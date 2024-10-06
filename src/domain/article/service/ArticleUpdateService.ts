@@ -3,18 +3,16 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Article } from '../domain/Article.entity';
 import { UpdateArticleRequest } from '../presentation/dto/request/UpdateArticleRequest'; // 'presentation'의 철자 수정
 import { InternalServerException } from '../exception/InternalServerException';
-import { ArticleRepository } from '../domain/repository/ArticleRepository';
-import { CategoryRepository } from '../../category/domain/repository/CategoryRepository';
-import { In } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { Category } from 'src/domain/category/domain/Category.entity';
 
 @Injectable()
 export class ArticleUpdateService {
     constructor(
-        @InjectRepository(ArticleRepository)
-        private readonly articleRepository: ArticleRepository,
-        @InjectRepository(CategoryRepository)
-        private readonly categoryRepository: CategoryRepository,
+        @InjectRepository(Article)
+        private readonly articleRepository: Repository<Article>,
+        @InjectRepository(Category)
+        private readonly categoryRepository: Repository<Category>,
     ) { }
 
     async updateArticle(articleId: string, updateArticleDto: UpdateArticleRequest): Promise<Article> {

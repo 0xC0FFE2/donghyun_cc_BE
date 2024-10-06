@@ -1,14 +1,14 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CategoryRepository } from '../domain/repository/CategoryRepository';
 import { CreateCategoryRequest } from '../presentation/dto/request/CreateCategoryRequest';
 import { Category } from '../domain/Category.entity';
 import { InternalServerException } from '../exception/InternalServerErrorException';
+import { Repository } from 'typeorm';
 @Injectable()
 export class CategoryDeleteService {
     constructor(
-        @InjectRepository(CategoryRepository)
-        private readonly categoryRepository: CategoryRepository,
+        @InjectRepository(Category)
+        private readonly categoryRepository: Repository<Category>,
     ) { }
 
     async deleteCategory(id: string): Promise<void> {

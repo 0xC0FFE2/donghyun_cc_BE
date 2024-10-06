@@ -3,18 +3,16 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Article } from '../domain/Article.entity';
 import { CreateArticleRequest } from '../presentation/dto/request/CreateArticleRequest';
 import { InternalServerException } from '../exception/InternalServerException';
-import { ArticleRepository } from '../domain/repository/ArticleRepository';
 import { Category } from 'src/domain/category/domain/Category.entity';
-import { CategoryRepository } from 'src/domain/category/domain/repository/CategoryRepository';
-import { In } from 'typeorm';
+import { In, Repository } from 'typeorm';
 
 @Injectable()
 export class ArticleCreateService {
     constructor(
-        @InjectRepository(ArticleRepository)
-        private readonly articleRepository: ArticleRepository,
-        @InjectRepository(CategoryRepository)
-        private readonly categoryRepository: CategoryRepository,
+        @InjectRepository(Article)
+        private readonly articleRepository: Repository<Article>,
+        @InjectRepository(Category)
+        private readonly categoryRepository: Repository<Category>,
     ) { }
 
     async createArticle(createArticleDto: CreateArticleRequest): Promise<Article> {

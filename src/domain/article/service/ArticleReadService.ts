@@ -2,14 +2,14 @@ import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/commo
 import { InjectRepository } from '@nestjs/typeorm';
 import { Article } from '../domain/Article.entity';
 import { InternalServerException } from '../exception/InternalServerException';
-import { ArticleRepository } from '../domain/repository/ArticleRepository';
 import { Viewmode } from '../domain/enum/Viewmode';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class ArticleReadService {
     constructor(
-        @InjectRepository(ArticleRepository)
-        private readonly articleRepository: ArticleRepository,
+        @InjectRepository(Article)
+        private readonly articleRepository: Repository<Article>,
     ) { }
 
     async readArticle(articleId: string, isAdmin: boolean): Promise<Article> {

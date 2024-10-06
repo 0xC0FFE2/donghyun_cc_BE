@@ -1,16 +1,16 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CategoryRepository } from '../domain/repository/CategoryRepository';
 import { Category } from '../domain/Category.entity';
 import { InternalServerException } from '../exception/InternalServerErrorException';
 import { CreateCategoryRequest } from '../presentation/dto/request/CreateCategoryRequest';
 import { UpdateCategoryRequest } from '../presentation/dto/request/UpdateCategoryRequest';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class CategoryUpdateService {
     constructor(
-        @InjectRepository(CategoryRepository)
-        private readonly categoryRepository: CategoryRepository,
+        @InjectRepository(Category)
+        private readonly categoryRepository: Repository<Category>,
     ) {}
 
     async updateCategory(updateCategoryDto: UpdateCategoryRequest): Promise<Category> {

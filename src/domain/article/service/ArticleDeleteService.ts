@@ -1,13 +1,14 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { InternalServerException } from '../exception/InternalServerException';
-import { ArticleRepository } from '../domain/repository/ArticleRepository';
+import { Article } from '../domain/Article.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class ArticleDeleteService {
     constructor(
-        @InjectRepository(ArticleRepository)
-        private readonly articleRepository: ArticleRepository,
+        @InjectRepository(Article)
+        private readonly articleRepository: Repository<Article>,
     ) { }
 
     async deleteArticle(ArticleId: string): Promise<boolean> {

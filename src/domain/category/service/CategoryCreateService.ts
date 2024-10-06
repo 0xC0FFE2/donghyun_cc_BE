@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CategoryRepository } from '../domain/repository/CategoryRepository';
 import { CreateCategoryRequest } from '../presentation/dto/request/CreateCategoryRequest';
 import { Category } from '../domain/Category.entity';
 import { InternalServerException } from '../exception/InternalServerErrorException';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class CategoryCreateService {
     constructor(
-        @InjectRepository(CategoryRepository)
-        private readonly categoryRepository: CategoryRepository,
+        @InjectRepository(Category)
+        private readonly categoryRepository: Repository<Category>,
     ) { }
 
     async createCategory(createCategoryDto: CreateCategoryRequest): Promise<Category> {
