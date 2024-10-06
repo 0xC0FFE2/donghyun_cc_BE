@@ -20,7 +20,7 @@ export class Article {
   article_data_url: string;
 
   @Column({
-    type: 'enum',
+    type: 'text',
     enum: Viewmode,
     default: Viewmode.PRIVATE
   })
