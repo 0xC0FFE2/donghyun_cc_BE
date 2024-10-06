@@ -8,7 +8,7 @@ export class Article {
   article_id: string;
 
   @CreateDateColumn({ type: 'datetime' })
-  article_date: Date;
+  article_date: string;
 
   @Column() // 게시글 제목
   article_name: string;

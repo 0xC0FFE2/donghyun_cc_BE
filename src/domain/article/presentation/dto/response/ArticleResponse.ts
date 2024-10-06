@@ -13,8 +13,8 @@ export class ArticleResponse {
     @IsString()
     article_data_url: string;
 
-    @IsBoolean()
-    article_view_mode: boolean;
+    @IsString()
+    article_view_mode: string;
 
     @IsString()
     article_date: string;
