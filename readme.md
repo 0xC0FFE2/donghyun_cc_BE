@@ -1,5 +1,6 @@
 # DONGHYUN.CC 백엔드 엔진
 
+mermaid
 erDiagram
     ARTICLE {
         INTEGER article_id PK
