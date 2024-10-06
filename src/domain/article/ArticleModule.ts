@@ -3,13 +3,13 @@ import { ArticleCreateService } from './service/ArticleCreateService';
 import { ArticleReadService } from './service/ArticleReadService';
 import { ArticleUpdateService } from './service/ArticleUpdateService';
 import { ArticleDeleteService } from './service/ArticleDeleteService';
-import { ArticleController } from './presentation/ArticleController';
-import { AdminArticleController } from './presentation/AdminArticleController';
+import { ArticleController } from './presentation/controller/ArticleController';
+import { AdminArticleController } from './presentation/controller/AdminArticleController';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Article } from './domain/Article.entity';
 import { Category } from '../category/domain/Category.entity';
 import { AuthModule } from 'src/global/auth/AuthModule';
-import { ArticleSearchController } from './presentation/ArticleSearchController';
+import { ArticleSearchController } from './presentation/controller/ArticleSearchController';
 import { ArticleSearchService } from './service/ArticleSearchService';
 
 @Module({

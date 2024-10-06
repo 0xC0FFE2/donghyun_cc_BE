@@ -1,12 +1,12 @@
 import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiQuery, ApiParam } from '@nestjs/swagger';
-import { ArticleCreateService } from '../service/ArticleCreateService';
-import { ArticleReadService } from '../service/ArticleReadService';
-import { ArticleUpdateService } from '../service/ArticleUpdateService';
-import { ArticleDeleteService } from '../service/ArticleDeleteService';
-import { CreateArticleRequest } from '../presentation/dto/request/CreateArticleRequest';
-import { UpdateArticleRequest } from '../presentation/dto/request/UpdateArticleRequest';
-import { ArticleResponse } from '../presentation/dto/response/ArticleResponse';
+import { ArticleCreateService } from '../../service/ArticleCreateService';
+import { ArticleReadService } from '../../service/ArticleReadService';
+import { ArticleUpdateService } from '../../service/ArticleUpdateService';
+import { ArticleDeleteService } from '../../service/ArticleDeleteService';
+import { CreateArticleRequest } from '../dto/request/CreateArticleRequest';
+import { UpdateArticleRequest } from '../dto/request/UpdateArticleRequest';
+import { ArticleResponse } from '../dto/response/ArticleResponse';
 
 @ApiTags('articles')
 @Controller('articles')

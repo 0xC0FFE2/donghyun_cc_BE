@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiQuery, ApiParam } from '@nestjs/swagger';
-import { ArticleResponse } from './dto/response/ArticleResponse';
-import { ArticleSearchService } from '../service/ArticleSearchService';
+import { ArticleResponse } from '../dto/response/ArticleResponse';
+import { ArticleSearchService } from '../../service/ArticleSearchService';
 
 @ApiTags('search')
 @Controller('search')
