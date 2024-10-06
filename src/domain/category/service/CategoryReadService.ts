@@ -14,7 +14,9 @@ export class CategoryReadService {
 
     async findAll(): Promise<Category[]> {
         try {
-            return await this.categoryRepository.find();
+            return await this.categoryRepository.find({
+                select: ['category_id', 'category_name']
+            });
         } catch (error) {
             throw new InternalServerException();
         }
