@@ -4,7 +4,7 @@ import { Viewmode } from './enum/Viewmode';
 
 @Entity('article')
 export class Article {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn('increment')
   article_id: string;
 
   @CreateDateColumn({ type: 'datetime' })
