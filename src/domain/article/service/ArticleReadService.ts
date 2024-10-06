@@ -26,7 +26,7 @@ export class ArticleReadService {
 
             return article;
         } catch (error) {
-            throw new InternalServerException();
+            throw new InternalServerException(error);
         }
     }
 
@@ -43,7 +43,7 @@ export class ArticleReadService {
             const totalPage = Math.ceil(totalCount / pageSize);
             return { articles, totalPage };
         } catch (error) {
-            throw new InternalServerException();
+            throw new InternalServerException(error);
         }
     }
 

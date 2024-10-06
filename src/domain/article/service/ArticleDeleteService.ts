@@ -20,7 +20,7 @@ export class ArticleDeleteService {
 
             return true;
         } catch (error) {
-            throw new InternalServerException();
+            throw new InternalServerException(error);
         }
     }
 }

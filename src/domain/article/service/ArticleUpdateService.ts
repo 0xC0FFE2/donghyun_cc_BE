@@ -52,7 +52,7 @@ export class ArticleUpdateService {
             if (error instanceof NotFoundException || error instanceof BadRequestException) {
                 throw error;
             }
-            throw new InternalServerException();
+            throw new InternalServerException(error);
         }
     }
 }
