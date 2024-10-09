@@ -1,5 +1,4 @@
 import { Injectable } from "@nestjs/common";
-import { Visitor } from "../domain/Visitor.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { VisitorRepository } from "../domain/repository/VisitorRepository";
 
