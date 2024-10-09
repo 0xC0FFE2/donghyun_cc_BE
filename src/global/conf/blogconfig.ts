@@ -1,0 +1,4 @@
+export const BLOGCONFIG = {
+    BLOG_NAME: 'DONGHYUN_CC',
+    BLOG_SEARCH_ITEMS: 8,
+};

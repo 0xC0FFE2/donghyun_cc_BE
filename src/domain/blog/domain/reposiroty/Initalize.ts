@@ -1,6 +1,6 @@
 import { Injectable, OnModuleInit } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Blog } from "./Blog.entity";
+import { Blog } from "../Blog.entity";
 import { Repository } from "typeorm";
 
 @Injectable()
