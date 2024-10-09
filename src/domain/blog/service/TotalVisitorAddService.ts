@@ -6,7 +6,7 @@ import { BLOGCONFIG } from "../../../global/conf/blogconfig"
 import { InternalServerException } from "../exception/InternalServerExcaption";
 
 @Injectable()
-export class BlogCreateService {
+export class BlogAddService {
     constructor(
         @InjectRepository(Blog)
         private readonly blogRepository: Repository<Blog>,
@@ -20,6 +20,7 @@ export class BlogCreateService {
             Blog.blog_visitors_total = Blog.blog_total_articles + addValue;
 
             this.blogRepository.save(Blog);
+            return true;
 
         } catch (error) {
             throw new InternalServerException(error)
