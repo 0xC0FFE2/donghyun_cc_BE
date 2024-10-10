@@ -7,7 +7,9 @@ export class VisitorAddMiddleware implements NestMiddleware {
     constructor(private readonly visitorAddService: VisitorAddService) { }
 
     async use(req: Request, res: Response, next: NextFunction) {
-        await this.visitorAddService.AddVisitor();
+        const realIp = req.headers['x-forwarded-for'] || req.ip;
+        const ip = Array.isArray(realIp) ? realIp[0] : realIp;
+        await this.visitorAddService.AddVisitor(ip);
         next();
     }
 }

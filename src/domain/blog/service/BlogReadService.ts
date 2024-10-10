@@ -17,7 +17,7 @@ export class BlogReadService {
         try {
             const blog = await this.blogRepository.findOne({ where: { blog_name: BLOGCONFIG.BLOG_NAME } })
             if (!blog) throw new Error;
-            
+
             return this.mapToBlogResponse(blog);
         } catch (error) {
             throw new InternalServerException(error);
@@ -26,8 +26,8 @@ export class BlogReadService {
 
     private mapToBlogResponse(blog: Blog): BlogResponse {
         return {
-            blog_total_views: blog.blog_visitors_total, // 엔티티의 값 매핑
-            blog_total_articles: blog.blog_total_articles, // 엔티티의 값 매핑
+            blog_total_views: blog.blog_visitors_total, 
+            blog_total_articles: blog.blog_total_articles,
         };
     }
 }

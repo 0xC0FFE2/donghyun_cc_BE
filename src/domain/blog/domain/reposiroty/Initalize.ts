@@ -2,6 +2,7 @@ import { Injectable, OnModuleInit } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Blog } from "../Blog.entity";
 import { Repository } from "typeorm";
+import { BLOGCONFIG } from "src/global/conf/blogconfig";
 
 @Injectable()
 export class InitalizeBlogRepository implements OnModuleInit {
@@ -28,7 +29,7 @@ export class InitalizeBlogRepository implements OnModuleInit {
     }
 
     async onModuleInit() {
-        await this.InitalizeBlogEntity("DONGHYUN_CC"); // DONGHYUN_CC 제목으로 블로그 초기화
+        await this.InitalizeBlogEntity(BLOGCONFIG.BLOG_NAME); 
         console.log('BLOG INITIALIZED')
     }
 }

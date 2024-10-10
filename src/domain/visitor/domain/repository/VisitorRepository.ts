@@ -10,24 +10,35 @@ export class VisitorRepository {
         this.redisClient = new Redis(redisConfig);
     }
 
-    private getVisitorByDate(key: string): Promise<string | null> {
+    private getVisitorByDateAndIP(key: string): Promise<string | null> {
         return this.redisClient.get(key);
     }
 
-    async getVisitor(): Promise<number> {
+    async getVisitorCountByDate(): Promise<number> {
         const todayDate = this.getCurrentDate();
-        return parseInt(await this.getVisitorByDate(todayDate));
+        const visitorsData = await this.redisClient.keys(`${todayDate}-*`);
+        let totalVisitors = 0;
+
+        for (const key of visitorsData) {
+            const count = parseInt(await this.redisClient.get(key)) || 0;
+            totalVisitors += count;
+        }
+
+        return totalVisitors;
     }
 
     async deleteVisitorHistory(): Promise<'OK'> {
         return this.redisClient.reset();
     }
 
-    async addVisitorByTodayDate(): Promise<'OK'> {
+    async addVisitorByTodayDate(ip: string): Promise<'OK'> {
         const todayDate = this.getCurrentDate();
-        var visitors = parseInt(await this.getVisitorByDate(todayDate));
-        if (!visitors) visitors = 0;
-        return this.redisClient.set(todayDate, ++visitors);
+        const ipKey = `${todayDate}-${ip}`;
+        let visitors = parseInt(await this.getVisitorByDateAndIP(ipKey)) || 0;
+
+        visitors += 1;
+
+        return this.redisClient.set(ipKey, visitors);
     }
 
     private getCurrentDate(): string {

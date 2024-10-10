@@ -9,8 +9,8 @@ export class VisitorAddService {
         private readonly visitorRepository: VisitorRepository
     ) { }
 
-    async AddVisitor() {
-        return this.visitorRepository.addVisitorByTodayDate();
+    async AddVisitor(userIp) {
+        return this.visitorRepository.addVisitorByTodayDate(userIp);
     }
 
     async DeleteVisitor() {
@@ -18,6 +18,6 @@ export class VisitorAddService {
     }
 
     async GetVisitor() {
-        return this.visitorRepository.getVisitor();
+        return this.visitorRepository.getVisitorCountByDate();
     }
 }
