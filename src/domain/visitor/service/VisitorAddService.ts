@@ -1,15 +1,13 @@
 import { Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
 import { VisitorRepository } from "../domain/repository/VisitorRepository";
 
 @Injectable()
 export class VisitorAddService {
     constructor(
-        @InjectRepository(VisitorRepository)
         private readonly visitorRepository: VisitorRepository
-    ) { }
+    ) {}
 
-    async AddVisitor(userIp) {
+    async AddVisitor(userIp: string) {
         return this.visitorRepository.addVisitorByTodayDate(userIp);
     }
 
