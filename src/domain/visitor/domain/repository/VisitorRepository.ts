@@ -17,28 +17,23 @@ export class VisitorRepository {
     async getVisitorCountByDate(): Promise<number> {
         const todayDate = this.getCurrentDate();
         const visitorsData = await this.redisClient.keys(`${todayDate}-*`);
-        let totalVisitors = 0;
-
-        for (const key of visitorsData) {
-            const count = parseInt(await this.redisClient.get(key)) || 0;
-            totalVisitors += count;
-        }
-
-        return totalVisitors;
+        return visitorsData.length;
     }
 
     async deleteVisitorHistory(): Promise<'OK'> {
         return this.redisClient.reset();
     }
 
-    async addVisitorByTodayDate(ip: string): Promise<'OK'> {
+    async addVisitorByTodayDate(ip: string): Promise<'OK' | null> {
         const todayDate = this.getCurrentDate();
         const ipKey = `${todayDate}-${ip}`;
-        let visitors = parseInt(await this.getVisitorByDateAndIP(ipKey)) || 0;
-
-        visitors += 1;
-        console.log(this.getVisitorCountByDate);
-        return this.redisClient.set(ipKey, visitors);
+        
+        const existingVisitor = await this.getVisitorByDateAndIP(ipKey);
+        if (existingVisitor) { //이미 방문한 IP라면 카운팅X
+            return null;
+        }
+        
+        return this.redisClient.set(ipKey, 1);
     }
 
     private getCurrentDate(): string {

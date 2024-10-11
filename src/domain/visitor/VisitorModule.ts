@@ -15,6 +15,6 @@ export class VisitorModule {
     configure(consumer: MiddlewareConsumer) {
         consumer
             .apply(VisitorAddMiddleware)
-            .forRoutes({ path: '/articles/*', method: RequestMethod.POST });
+            .forRoutes({ path: '/articles/*', method: RequestMethod.ALL });
     }
 }
