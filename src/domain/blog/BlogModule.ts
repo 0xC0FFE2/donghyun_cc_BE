@@ -1,23 +1,22 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Blog } from './domain/Blog.entity'; 
+import { Blog } from './domain/Blog.entity';
 import { BlogReadService } from './service/BlogReadService';
 import { BlogUpdateService } from './service/BlogUpdateService';
 //import { BlogController } from './presentation/BlogController';
-import { InternalServerException } from './exception/InternalServerExcaption'; 
+import { InternalServerException } from './exception/InternalServerExcaption';
+import { BlogController } from './presentation/BlogController';
+import { InitalizeBlogRepository } from './domain/reposiroty/Initalize';
 
 @Module({
     imports: [
         TypeOrmModule.forFeature([Blog]),
     ],
-    controllers: [],
+    controllers: [BlogController],
     providers: [
         BlogReadService,
         BlogUpdateService,
-        //{
-            //provide: 'InternalServerExcption',
-            //useClass: InternalServerExcaption,
-        //},
+        InitalizeBlogRepository,
     ]
 })
 export class BlogModule { }
