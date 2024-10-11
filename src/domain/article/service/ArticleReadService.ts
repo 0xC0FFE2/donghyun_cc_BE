@@ -13,22 +13,19 @@ export class ArticleReadService {
     ) { }
 
     async readArticle(articleId: string, isAdmin: boolean): Promise<Article> {
-        try {
-            const article = await this.articleRepository.findOne({ where: { article_id: articleId } });
-
-            if (!article) {
-                throw new NotFoundException('Article Not Found');
-            }
-
-            if (article.article_view_mode === Viewmode.PRIVATE && !isAdmin) {
-                throw new ForbiddenException('Article is not viewable');
-            }
-
-            return article;
-        } catch (error) {
-            throw new InternalServerException(error);
+        const article = await this.articleRepository.findOne({ where: { article_id: articleId } });
+    
+        if (!article) {
+            throw new NotFoundException('Article Not Found');
         }
+    
+        if (article.article_view_mode === Viewmode.PRIVATE && !isAdmin) {
+            throw new ForbiddenException('Article is not viewable');
+        }
+    
+        return article;
     }
+    
 
     async getArticles(article_page: number, isAdmin: boolean): Promise<{ articles: Article[], totalPage: number }> {
         const pageSize = 8;

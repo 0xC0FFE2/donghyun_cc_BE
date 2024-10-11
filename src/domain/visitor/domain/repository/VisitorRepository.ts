@@ -37,7 +37,7 @@ export class VisitorRepository {
         let visitors = parseInt(await this.getVisitorByDateAndIP(ipKey)) || 0;
 
         visitors += 1;
-
+        console.log(this.getVisitorCountByDate);
         return this.redisClient.set(ipKey, visitors);
     }
 
