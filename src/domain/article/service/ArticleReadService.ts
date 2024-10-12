@@ -13,7 +13,11 @@ export class ArticleReadService {
     ) { }
 
     async readArticle(articleId: string, isAdmin: boolean): Promise<Article> {
-        const article = await this.articleRepository.findOne({ where: { article_id: articleId }, relations: ['categorys'] });
+        const article = await this.articleRepository.findOne({
+            where: { article_id: articleId },
+            relations: ['categorys'],
+            order: { article_id: 'ASC' }
+        });
 
         if (!article) {
             throw new NotFoundException('Article Not Found');

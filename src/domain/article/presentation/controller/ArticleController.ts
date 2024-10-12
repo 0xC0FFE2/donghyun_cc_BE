@@ -23,7 +23,7 @@ export class ArticleController {
     @ApiParam({ name: 'id', description: 'Article ID' })
     @ApiResponse({
         status: HttpStatus.OK,
-        description: '특정한 게시물의 정보 가져옴',
+        description: '특정한 게시물의 정보 가져옵니다',
         type: ArticleResponse
     })
     async getArticleById(@Param('id') articleId: string): Promise<ArticleResponse> {
