@@ -10,8 +10,8 @@ export class ArticleSearchController {
         private readonly articleSearchService: ArticleSearchService,
     ) { }
 
-    @Get("/category/:category_id")
-    @ApiOperation({ summary: 'Get articles by category' })
+    @Get("/categories/:category_name")
+    @ApiOperation({ summary: 'Get articles by category name' })
     @ApiQuery({
         name: 'page',
         required: false,
@@ -29,9 +29,10 @@ export class ArticleSearchController {
     })
     async getArticleByArticleId(
         @Query('page') page: number = 1,
-        @Param('category_id') categoryId: string,
-        @Param('size') pageSize: number
+        @Param('category_name') categoryName: string,
+        @Param('size') pageSize: number = 4
     ): Promise<{ articles: ArticleResponse[], totalPage: number }> {
-        return this.articleSearchService.searchArticlesByCategoryIds(pageSize, page, categoryId, false);
+        console.log("!!!!!!!")
+        return this.articleSearchService.searchArticlesByCategoryName(pageSize, page, categoryName, false);
     }
 }

@@ -12,11 +12,11 @@ export class ArticleSearchService {
         private readonly articleRepository: Repository<Article>,
     ) { }
 
-    async searchArticlesByCategoryIds(pageSize: number, article_page: number, category_id: string, isAdmin: boolean): Promise<{ articles: Article[], totalPage: number }> {
+    async searchArticlesByCategoryName(pageSize: number, article_page: number, categoryName: string, isAdmin: boolean): Promise<{ articles: Article[], totalPage: number }> {
         try {
             const queryBuilder = this.articleRepository.createQueryBuilder('article')
                 .leftJoinAndSelect('article.categorys', 'category')
-                .where('category.category_id = :categoryId', { categoryId: category_id });
+                .where('category.category_name = :categoryName', { categoryName: categoryName });
 
             if (!isAdmin) {
                 queryBuilder.andWhere('article.article_view_mode = :viewMode', {
@@ -37,6 +37,7 @@ export class ArticleSearchService {
             const totalPage = Math.ceil(totalCount / pageSize);
             return { articles, totalPage };
         } catch (error) {
+            console.log(error)
             if (error instanceof NotFoundException) {
                 throw error;
             }
