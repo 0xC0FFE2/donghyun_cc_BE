@@ -37,7 +37,6 @@ export class ArticleSearchService {
             const totalPage = Math.ceil(totalCount / pageSize);
             return { articles, totalPage };
         } catch (error) {
-            console.log(error)
             if (error instanceof NotFoundException) {
                 throw error;
             }

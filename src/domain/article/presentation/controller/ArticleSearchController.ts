@@ -32,7 +32,6 @@ export class ArticleSearchController {
         @Param('category_name') categoryName: string,
         @Param('size') pageSize: number = 4
     ): Promise<{ articles: ArticleResponse[], totalPage: number }> {
-        console.log("!!!!!!!")
         return this.articleSearchService.searchArticlesByCategoryName(pageSize, page, categoryName, false);
     }
 }
