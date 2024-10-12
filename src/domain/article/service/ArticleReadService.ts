@@ -14,26 +14,25 @@ export class ArticleReadService {
 
     async readArticle(articleId: string, isAdmin: boolean): Promise<Article> {
         const article = await this.articleRepository.findOne({ where: { article_id: articleId } });
-    
+
         if (!article) {
             throw new NotFoundException('Article Not Found');
         }
-    
+
         if (article.article_view_mode === Viewmode.PRIVATE && !isAdmin) {
             throw new ForbiddenException('Article is not viewable');
         }
-    
+
         return article;
     }
-    
 
-    async getArticles(article_page: number, isAdmin: boolean): Promise<{ articles: Article[], totalPage: number }> {
-        const pageSize = 8;
+
+    async getArticles(page_size: number, article_page: number, isAdmin: boolean): Promise<{ articles: Article[], totalPage: number }> {
         try {
             const [articles, totalCount] = await this.articleRepository.findAndCount({
                 where: isAdmin ? {} : { article_view_mode: Viewmode.PUBLIC },
-                skip: (article_page - 1) * pageSize,
-                take: pageSize,
+                skip: (article_page - 1) * page_size,
+                take: page_size,
                 order: { article_date: 'DESC' }
             });
 
@@ -41,7 +40,7 @@ export class ArticleReadService {
                 throw new NotFoundException('No article found!');
             }
 
-            const totalPage = Math.ceil(totalCount / pageSize);
+            const totalPage = Math.ceil(totalCount / page_size);
             return { articles, totalPage };
         } catch (error) {
             if (error instanceof NotFoundException) {

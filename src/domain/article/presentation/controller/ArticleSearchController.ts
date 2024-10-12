@@ -29,8 +29,9 @@ export class ArticleSearchController {
     })
     async getArticleByArticleId(
         @Query('page') page: number = 1,
-        @Param('category_id') categoryId: string
+        @Param('category_id') categoryId: string,
+        @Param('size') pageSize: number
     ): Promise<{ articles: ArticleResponse[], totalPage: number }> {
-        return this.articleSearchService.searchArticlesByCategoryIds(page, categoryId, false);
+        return this.articleSearchService.searchArticlesByCategoryIds(pageSize, page, categoryId, false);
     }
 }

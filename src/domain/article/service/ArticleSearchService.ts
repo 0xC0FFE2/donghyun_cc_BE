@@ -12,8 +12,7 @@ export class ArticleSearchService {
         private readonly articleRepository: Repository<Article>,
     ) { }
 
-    async searchArticlesByCategoryIds(article_page: number, category_id: string, isAdmin: boolean): Promise<{ articles: Article[], totalPage: number }> {
-        const pageSize = 8;
+    async searchArticlesByCategoryIds(pageSize: number, article_page: number, category_id: string, isAdmin: boolean): Promise<{ articles: Article[], totalPage: number }> {
         try {
             const queryBuilder = this.articleRepository.createQueryBuilder('article')
                 .leftJoinAndSelect('article.categorys', 'category')

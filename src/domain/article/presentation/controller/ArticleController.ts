@@ -45,8 +45,9 @@ export class ArticleController {
         isArray: true
     })
     async getArticles(
-        @Query('page') page: number = 1
+        @Query('page') page: number = 1,
+        @Query('size') pageSize: number = 8,
     ): Promise<{ articles: ArticleResponse[], totalPage: number }> {
-        return this.articleReadService.getArticles(page, false);
+        return this.articleReadService.getArticles(pageSize, page, false);
     }
 }
