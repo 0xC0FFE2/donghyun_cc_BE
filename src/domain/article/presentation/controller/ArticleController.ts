@@ -23,7 +23,7 @@ export class ArticleController {
     @ApiParam({ name: 'id', description: 'Article ID' })
     @ApiResponse({
         status: HttpStatus.OK,
-        description: 'Returns the specified article',
+        description: '특정한 게시물의 정보 가져옴',
         type: ArticleResponse
     })
     async getArticleById(@Param('id') articleId: string): Promise<ArticleResponse> {
@@ -31,16 +31,22 @@ export class ArticleController {
     }
 
     @Get()
-    @ApiOperation({ summary: 'Get paginated articles' })
+    @ApiOperation({ summary: '페이지화 된 게시물 목록을 가져옵니다' })
     @ApiQuery({
         name: 'page',
         required: false,
-        description: 'Page number (default: 1)',
+        description: '조회할 페이지 번호 / 기본 : 1',
+        type: Number
+    })
+    @ApiQuery({
+        name: 'size',
+        required: false,
+        description: '한 페이지 의 게시물 수 / 기본 : 8',
         type: Number
     })
     @ApiResponse({
         status: HttpStatus.OK,
-        description: 'Returns paginated articles',
+        description: '페이지화 된 게시글의 정보를 JSON으로 반환합니다',
         type: ArticleResponse,
         isArray: true
     })

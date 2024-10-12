@@ -13,7 +13,7 @@ export class ArticleReadService {
     ) { }
 
     async readArticle(articleId: string, isAdmin: boolean): Promise<Article> {
-        const article = await this.articleRepository.findOne({ where: { article_id: articleId } });
+        const article = await this.articleRepository.findOne({ where: { article_id: articleId }, relations: ['categorys'] });
 
         if (!article) {
             throw new NotFoundException('Article Not Found');
@@ -33,7 +33,8 @@ export class ArticleReadService {
                 where: isAdmin ? {} : { article_view_mode: Viewmode.PUBLIC },
                 skip: (article_page - 1) * page_size,
                 take: page_size,
-                order: { article_date: 'DESC' }
+                order: { article_date: 'DESC' },
+                relations: ['categorys']
             });
 
             if (articles.length === 0) {

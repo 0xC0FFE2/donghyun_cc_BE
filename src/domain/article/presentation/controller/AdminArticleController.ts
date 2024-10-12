@@ -12,7 +12,7 @@ import { AdminGuard } from 'src/global/auth/guard/AdminGuard';
 
 @ApiTags('admin')
 @Controller('admin/articles')
-@UseGuards(AdminGuard)
+//@UseGuards(AdminGuard)
 export class AdminArticleController {
     constructor(
         private readonly articleCreateService: ArticleCreateService,
