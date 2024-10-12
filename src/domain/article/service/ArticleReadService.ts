@@ -16,7 +16,7 @@ export class ArticleReadService {
         const article = await this.articleRepository.findOne({
             where: { article_id: articleId },
             relations: ['categorys'],
-            order: { article_id: 'ASC' }
+            order: { article_id: 'DESC' }
         });
 
         if (!article) {
