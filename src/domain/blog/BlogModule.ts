@@ -17,6 +17,9 @@ import { InitalizeBlogRepository } from './domain/reposiroty/Initalize';
         BlogReadService,
         BlogUpdateService,
         InitalizeBlogRepository,
+    ],
+    exports: [
+        
     ]
 })
 export class BlogModule { }
