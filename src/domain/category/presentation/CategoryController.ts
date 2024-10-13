@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, Body, Param, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Param, HttpStatus, UseGuards } from '@nestjs/common';
 import { CategoryCreateService } from '../service/CategoryCreateService';
 import { CategoryReadService } from '../service/CategoryReadService';
 import { CategoryUpdateService } from '../service/CategoryUpdateService';
@@ -7,6 +7,7 @@ import { CreateCategoryRequest } from './dto/request/CreateCategoryRequest';
 import { UpdateCategoryRequest } from './dto/request/UpdateCategoryRequest';
 import { CategoryResponse } from './dto/response/CategoryResponse';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { AdminGuard } from 'src/global/auth/guard/AdminGuard';
 
 @ApiTags('categories')
 @Controller('categories')
@@ -17,7 +18,7 @@ export class CategoryController {
         private readonly categoryUpdateService: CategoryUpdateService,
         private readonly categoryDeleteService: CategoryDeleteService,
     ) { }
-
+    @UseGuards(AdminGuard)
     @Post()
     @ApiOperation({ summary: 'Create a new category' })
     @ApiResponse({ status: HttpStatus.CREATED, description: 'Category created successfully', type: CategoryResponse })
@@ -34,6 +35,7 @@ export class CategoryController {
         return categories.map(category => this.toCategoryResponse(category));
     }
 
+    @UseGuards(AdminGuard)
     @Get(':id')
     @ApiOperation({ summary: 'Get a category by ID' })
     @ApiResponse({ status: HttpStatus.OK, description: 'Returns the specified category', type: CategoryResponse })
@@ -42,6 +44,7 @@ export class CategoryController {
         return this.toCategoryResponse(category);
     }
 
+    @UseGuards(AdminGuard)
     @Put()
     @ApiOperation({ summary: 'Update a category' })
     @ApiResponse({ status: HttpStatus.OK, description: 'Category updated successfully', type: CategoryResponse })
@@ -50,6 +53,7 @@ export class CategoryController {
         return this.toCategoryResponse(category);
     }
 
+    @UseGuards(AdminGuard)
     @Delete(':id')
     @ApiOperation({ summary: 'Delete a category' })
     @ApiResponse({ status: HttpStatus.NO_CONTENT, description: 'Category deleted successfully' })
