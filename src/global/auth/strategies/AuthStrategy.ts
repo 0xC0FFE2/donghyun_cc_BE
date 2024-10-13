@@ -5,7 +5,7 @@ import axios from 'axios';
 export class AuthStrategy {
   async validateToken(token: string): Promise<boolean> {
     try {
-      const response = await axios.post('https://auth.nanu.cc/api/client_auth/k2w57f', {}, {
+      const response = await axios.post('https://auth.nanu.cc/api/oauth/client_auth/k2w57f', {}, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       return response.status === 200;
