@@ -21,7 +21,7 @@ export class VisitorRepository {
     }
 
     async deleteVisitorHistory(): Promise<'OK'> {
-        return this.redisClient.reset();
+        return this.redisClient.flushdb();
     }
 
     async addVisitorByTodayDate(ip: string): Promise<'OK' | null> {
