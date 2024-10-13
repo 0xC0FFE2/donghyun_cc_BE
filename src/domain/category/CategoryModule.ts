@@ -6,10 +6,12 @@ import { CategoryDeleteService } from './service/CategoryDeleteService';
 import { CategoryController } from './presentation/CategoryController';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Category } from './domain/Category.entity';
+import { AuthModule } from 'src/global/auth/AuthModule';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Category]),
+    AuthModule,
   ],
   controllers: [CategoryController],
   providers: [CategoryCreateService,CategoryReadService,CategoryUpdateService,CategoryDeleteService],
