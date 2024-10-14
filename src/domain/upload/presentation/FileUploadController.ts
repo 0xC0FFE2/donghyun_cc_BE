@@ -3,6 +3,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { FileUploadService } from '../service/FileUploadService';
 import { AdminGuard } from 'src/global/auth/guard/AdminGuard';
 
+@UseGuards(AdminGuard)
 @Controller('upload')
 export class FileUploadController {
     constructor(private readonly fileUploadService: FileUploadService) {}
