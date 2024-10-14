@@ -26,6 +26,6 @@ export class Article {
   })
   article_view_mode: Viewmode;
 
-  @ManyToMany(() => Category, (category) => category.articles)
+  @ManyToMany(() => Category, (category) => category.articles, { cascade: true, onDelete: 'CASCADE' })
   categorys: Category[];
 }

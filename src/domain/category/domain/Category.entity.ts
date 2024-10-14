@@ -9,7 +9,7 @@ export class Category {
   @Column()
   category_name: string;
 
-  @ManyToMany(() => Article, (article) => article.categorys)
+  @ManyToMany(() => Article, (article) => article.categorys, { cascade: true })
   @JoinTable()
   articles: Article[];
 }
