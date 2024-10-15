@@ -7,6 +7,7 @@ import { ArticleDeleteService } from '../../service/ArticleDeleteService';
 import { CreateArticleRequest } from '../dto/request/CreateArticleRequest';
 import { UpdateArticleRequest } from '../dto/request/UpdateArticleRequest';
 import { ArticleResponse } from '../dto/response/ArticleResponse';
+import { ArticleSearchResponse } from '../dto/response/ArticleSearchResponse';
 
 @ApiTags('articles')
 @Controller('articles')
@@ -53,7 +54,21 @@ export class ArticleController {
     async getArticles(
         @Query('page') page: number = 1,
         @Query('size') pageSize: number = 8,
-    ): Promise<{ articles: ArticleResponse[], totalPage: number }> {
-        return this.articleReadService.getArticles(pageSize, page, false);
+    ): Promise<{ articles: ArticleSearchResponse[], totalPage: number }> {
+        const result = await this.articleReadService.getArticles(pageSize, page, false);
+        return {
+            articles: result.articles.map(this.mapToArticleSearchResponse),
+            totalPage: result.totalPage,
+        }
+    }
+
+    private mapToArticleSearchResponse(article: any): ArticleSearchResponse {
+        return {
+            article_id: article.article_id,
+            article_name: article.article_name,
+            thumbnail_url: article.thumbnail_url,
+            article_date: article.article_date,
+            categories: article.categorys?.map(category => category.category_name) ?? [],
+        };
     }
 }
