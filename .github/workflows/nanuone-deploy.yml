@@ -1,0 +1,38 @@
+name: Application AWS에 배포
+
+on:
+  push:
+    branches:
+      - master
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    environment: DEPLOY_ACTION
+
+    steps:
+      - name: Log in to registry
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.NANU_ONE_USERNAME }}
+          password: ${{ secrets.NANU_ONE_PASSWORD }}
+          registry: registry.nanu.cc  # 사설 레지스트리 URL
+
+      # 2. 코드 체크아웃
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Build Docker image
+        run: |
+          docker build -t registry.nanu.cc/nanueks/${{ secrets.NANU_ONE_APPID }} .
+
+      - name: Tag Docker image
+        run: |
+          docker tag registry.nanu.cc/nanueks/${{ secrets.NANU_ONE_APPID }} registry.nanu.cc/nanueks/${{ secrets.NANU_ONE_APPID }}:latest
+
+      - name: Push Docker image
+        run: |
+          docker push registry.nanu.cc/nanueks/${{ secrets.NANU_ONE_APPID }}:latest
+
+      - name: Success Message
+        run: echo "Image successfully pushed to registry.nanu.cc With Deploy Request"
