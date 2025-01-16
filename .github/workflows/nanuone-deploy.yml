@@ -1,4 +1,4 @@
-name: Application AWS에 배포
+name: NANU ONE에 배포하기
 
 on:
   push:
@@ -8,7 +8,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     
-    environment: DEPLOY_ACTION
+    environment: NANU_ONE_DEPLOY
 
     steps:
       - name: Log in to registry
@@ -16,9 +16,8 @@ jobs:
         with:
           username: ${{ secrets.NANU_ONE_USERNAME }}
           password: ${{ secrets.NANU_ONE_PASSWORD }}
-          registry: registry.nanu.cc  # 사설 레지스트리 URL
-
-      # 2. 코드 체크아웃
+          registry: registry.nanu.cc
+        
       - name: Checkout repository
         uses: actions/checkout@v3
 
