@@ -10,13 +10,13 @@ export class Article {
   @CreateDateColumn({ type: 'datetime' })
   article_date: string;
 
-  @Column() // 게시글 제목
+  @Column()
   article_name: string;
 
-  @Column() // 게시글 썸네일 URL
+  @Column()
   thumbnail_url: string;
 
-  @Column() // 게시글 내용 MD파일 URL
+  @Column()
   article_data_url: string;
 
   @Column({
