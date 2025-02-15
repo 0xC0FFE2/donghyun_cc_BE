@@ -17,7 +17,7 @@ export class BlogUpdateService {
             const Blog = await this.blogRepository.findOne({ where: { blog_name: BLOGCONFIG.BLOG_NAME } })
             if (!Blog) throw new Error;
 
-            Blog.blog_visitors_total = Blog.blog_total_articles + addValue;
+            Blog.blog_visitors_total = Blog.blog_visitors_total + addValue;
 
             this.blogRepository.save(Blog);
             return true;
