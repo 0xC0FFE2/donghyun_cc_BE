@@ -35,7 +35,7 @@ export class ArticleReadService {
         articleResponse.article_data_url = article.article_data_url;
         articleResponse.article_view_mode = article.article_view_mode;
         articleResponse.article_date = article.article_date;
-        articleResponse.categories = article.categorys.map(category => category.category_id);
+        articleResponse.categories = article.categorys.map(category => category.category_name);
     
         return articleResponse;
     }
