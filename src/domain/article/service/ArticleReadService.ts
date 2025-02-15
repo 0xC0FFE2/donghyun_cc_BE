@@ -4,6 +4,7 @@ import { Article } from '../domain/Article.entity';
 import { InternalServerException } from '../exception/InternalServerException';
 import { Viewmode } from '../domain/enum/Viewmode';
 import { Repository } from 'typeorm';
+import { ArticleResponse } from '../presentation/dto/response/ArticleResponse';
 
 @Injectable()
 export class ArticleReadService {
@@ -12,22 +13,31 @@ export class ArticleReadService {
         private readonly articleRepository: Repository<Article>,
     ) { }
 
-    async readArticle(articleId: string, isAdmin: boolean): Promise<Article> {
+    async readArticle(articleId: string, isAdmin: boolean): Promise<ArticleResponse> {
         const article = await this.articleRepository.findOne({
             where: { article_id: articleId },
             relations: ['categorys'],
             order: { article_id: 'DESC' }
         });
-
+    
         if (!article) {
             throw new NotFoundException('Article Not Found');
         }
-
+    
         if (article.article_view_mode === Viewmode.PRIVATE && !isAdmin) {
             throw new ForbiddenException('Article is not viewable');
         }
-
-        return article;
+        
+        const articleResponse = new ArticleResponse();
+        articleResponse.article_id = article.article_id;
+        articleResponse.article_name = article.article_name;
+        articleResponse.thumbnail_url = article.thumbnail_url;
+        articleResponse.article_data_url = article.article_data_url;
+        articleResponse.article_view_mode = article.article_view_mode;
+        articleResponse.article_date = article.article_date;
+        articleResponse.categories = article.categorys.map(category => category.category_id);
+    
+        return articleResponse;
     }
 
 
