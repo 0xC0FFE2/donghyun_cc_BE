@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ArticleModule } from './article/ArticleModule';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CategoryModule } from './category/CategoryModule';
@@ -7,6 +7,7 @@ import { VisitorModule } from './visitor/VisitorModule';
 import { UploadModule } from './upload/FileUploadModule';
 import { AuthModule } from 'src/global/auth/AuthModule';
 import { OAuthModule } from './auth/OAuthModule';
+import { VisitorAddMiddleware } from './visitor/presentation/middleware/VisitorAddMiddleware';
 
 @Module({
   imports: [
@@ -24,4 +25,8 @@ import { OAuthModule } from './auth/OAuthModule';
     OAuthModule
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(VisitorAddMiddleware).forRoutes('*');
+  }
+}
