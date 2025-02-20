@@ -10,7 +10,7 @@ export class VisitorAutoUpdateService {
         private readonly blogUpdateService: BlogUpdateService
     ) {}
 
-    @Cron('0 0 * * *')
+    @Cron('0 58 23 * * *')
     async handleCron() {
         const visitorCount = await this.visitorRepository.getVisitorCountByDate();
         await this.addTotalVisitor(visitorCount);
